@@ -18,7 +18,7 @@ table_rows = xquery[0].xpath('tbody/tr')
 write_row(table_headers)
 for row in table_rows:
     row_data = row.xpath('td/text()')
-    row_data.insert(0, row[0][0].text)
+    row_data.insert(0, '"' + row[0][0].text + '"')
     write_row(row_data)
     print row_data
-f.close() 
+f.close()
