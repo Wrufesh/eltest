@@ -34,9 +34,9 @@ db = client.eltest_db
 for page in range(1, get_pages()):
     page = requests.get('http://data.investmentnews.com/aotm/' + '?PAGE=' + str(page))
     tree = html.fromstring(page.text)
+    xquery = tree.xpath('//table[@class="dataTable display treeTable rwd-table"]')
 
     table_rows = xquery[0].xpath('tbody/tr')
-    xquery = tree.xpath('//table[@class="dataTable display treeTable rwd-table"]')
     for row in table_rows:
         row_data = row.xpath('td/text()')
         advicers = re.split(',', row[0][0].text)
