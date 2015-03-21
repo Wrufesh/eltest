@@ -23,7 +23,7 @@ def write_row(lyst):
               'date': lyst[4]
               }
     x_table = db.x_table
-    xtable_id = x_table.inser_one(xtable).inserted_id
+    xtable_id = x_table.insert_one(xtable).inserted_id
     print xtable_id
 
 
@@ -39,7 +39,7 @@ for page in range(1, get_pages()):
     table_rows = xquery[0].xpath('tbody/tr')
     for row in table_rows:
         row_data = row.xpath('td/text()')
-        advicers = re.split(',', row[0][0])
+        advicers = re.split(',', row[0][0].text)
         row_data.insert(0, advicers)
 
         # write to database here
