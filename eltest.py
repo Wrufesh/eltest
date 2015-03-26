@@ -23,7 +23,7 @@ def write_row(lyst):
 
 
 # Connect database here
-f = open('output.csv', 'w')
+f = open('investmentnews.csv', 'w')
 
 for page in range(1, get_pages()):
     page = requests.get('http://data.investmentnews.com/aotm/' + '?PAGE=' + str(page))
@@ -31,9 +31,13 @@ for page in range(1, get_pages()):
     xquery = tree.xpath('//table[@class="dataTable display treeTable rwd-table"]')
 
     table_rows = xquery[0].xpath('tbody/tr')
+    table_heading = xquery[0].xpath('thead//a/text()')
+    if page == 1:
+        write_row(table_heading)
     for row in table_rows:
         row_data = row.xpath('td/text()')
-        row_data.insert(0, '"' + row[0][0].text + '"')
-        write_row(row_data)
-        print row_data
+        mod_row_data = ['"'+ x + '"' for x in row_data]
+        mod_row_data.insert(0, '"' + row[0][0].text + '"')
+        write_row(mod_row_data)
+        print mod_row_data
 f.close()
